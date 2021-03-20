@@ -104,6 +104,10 @@
 				text = incompatible_tenet_pacifism_trigger
 				NOT = { flag:tenet_pacifism = { is_in_list = selected_doctrines } }
 			}
+			custom_description = {
+				text = incompatible_tenet_dharmic_pacifism_trigger
+				NOT = { flag:tenet_dharmic_pacifism = { is_in_list = selected_doctrines } }
+			}
 		}
 
 		parameters = {
@@ -251,6 +255,19 @@
 
 	tenet_consolamentum = {
 		icon = core_tenet_prayer
+
+		name = {
+			first_valid = {
+				triggered_desc = {
+					trigger = {
+						religion_tag = christianity_religion
+					}
+					desc = tenet_consolamentum_name
+				}
+				desc = tenet_consolamentum_name_alternate
+			}
+		}
+
 		piety_cost = {
 			if = {
 				limit = {
@@ -370,6 +387,15 @@
 		traits = {
 			virtues = { temperate }
 			sins = { gluttonous }
+		}
+
+		can_pick = {
+			custom_description = {
+				text = incompatible_tenet_eastern_syncretism_trigger
+				NOT = {
+					flag:tenet_eastern_syncretism = { is_in_list = selected_doctrines }
+				}
+			}
 		}
 
 		parameters = {
@@ -529,6 +555,12 @@
 				text = incompatible_tenet_armed_pilgrimages_trigger
 				NOT = { flag:tenet_armed_pilgrimages = { is_in_list = selected_doctrines } }
 			}
+			custom_description = {
+				text = incompatible_tenet_gruesome_festivals_trigger
+				NOT = {
+					flag:tenet_gruesome_festivals = { is_in_list = selected_doctrines }
+				}
+			}
 		}
 
 		parameters = {
@@ -538,16 +570,13 @@
 			piety_from_long_peace = 1
 		}
 
-		character_modifier = {
-			domain_limit = 1
-		}
-
 		traits = {
 			virtues = { calm }
 			sins = { wrathful }
 		}
 		
 		character_modifier = {
+			domain_limit = 1
 			ai_war_chance = -0.25
 			ai_war_cooldown = 0.25
 		}
@@ -775,7 +804,10 @@
 		can_pick = {
 			custom_description = {
 				text = doctrine_inverted_pluralism_pluralistic_trigger
-				NOT = {	flag:doctrine_pluralism_righteous = { is_in_list = selected_doctrines }}
+				NOR = {
+					flag:doctrine_pluralism_fundamentalist = { is_in_list = selected_doctrines }
+					flag:doctrine_pluralism_righteous = { is_in_list = selected_doctrines }
+				}
 			}
 		}
 
@@ -1227,12 +1259,28 @@
 	}
 
 	tenet_bhakti = {
+		name = {
+			first_valid = {
+				triggered_desc = {
+					trigger = { religion_tag = hinduism_religion }
+					desc = tenet_bhakti_name
+				}
+				desc = tenet_bhakti_patron_god_name
+			}
+		}
 		icon = core_tenet_bhakti
 
 		piety_cost = faith_tenet_cost_mid
 
 		is_shown = {
-			religion_tag = hinduism_religion
+			OR = {
+				religion_tag = hinduism_religion
+				# With FP1, Germanics also get personal deities.
+				AND = {
+					religion_tag = germanic_religion
+					has_fp1_dlc_trigger = yes
+				}
+			}
 		}
 
 		parameters = {
@@ -1268,15 +1316,28 @@
 			}
 		}
 
+		can_pick = {
+			custom_description = {
+				text = incompatible_tenet_human_sacrifice_trigger
+				NOT = { flag:tenet_human_sacrifice = { is_in_list = selected_doctrines } }
+			}
+			custom_description = {
+				text = incompatible_tenet_armed_pilgrimages_trigger
+				NOT = { flag:tenet_armed_pilgrimages = { is_in_list = selected_doctrines } }
+			}
+			custom_description = {
+				text = incompatible_tenet_gruesome_festivals_trigger
+				NOT = {
+					flag:tenet_gruesome_festivals = { is_in_list = selected_doctrines }
+				}
+			}
+		}
+		
 		parameters = {
 			reincarnation_resistance_to_conversion = yes
 			holy_wars_forbidden = yes
 			pacifist_opinion_active = yes
 			opinion_of_pacifist_opinion_active = 10
-		}
-
-		character_modifier = {
-			domain_limit = 1
 		}
 
 		traits = {
@@ -1285,6 +1346,7 @@
 		}
 		
 		character_modifier = {
+			domain_limit = 1
 			ai_war_chance = -0.25
 			ai_war_cooldown = 0.25
 		}
@@ -1577,6 +1639,7 @@
 		}
 
 		is_shown = {
+			# No HumSac for Abrahamics: 'tis literally the religion-namer.
 			NOR = {
 				religion_tag = christianity_religion
 				religion_tag = judaism_religion
@@ -1585,8 +1648,19 @@
 		}
 
 		can_pick = {
-			NOR = {
-				flag:tenet_pacifism = { is_in_list = selected_doctrines }
+			custom_description = {
+				text = incompatible_tenet_pacifism_trigger
+				NOT = { flag:tenet_pacifism = { is_in_list = selected_doctrines } }
+			}
+			custom_description = {
+				text = incompatible_tenet_dharmic_pacifism_trigger
+				NOT = { flag:tenet_dharmic_pacifism = { is_in_list = selected_doctrines } }
+			}
+			custom_description = {
+				text = incompatible_tenet_gruesome_festivals_trigger
+				NOT = {
+					flag:tenet_gruesome_festivals = { is_in_list = selected_doctrines }
+				}
 			}
 		}
 
@@ -1833,6 +1907,7 @@
 
 		is_shown = {
 			NOR = {
+				religion_tag = christianity_religion
 				religion_tag = islam_religion
 				religion_tag = judaism_religion
 				religion_tag = dualism_religion
@@ -1840,13 +1915,13 @@
 		}
 
 		can_pick = {
-			NOR = {
-				flag:tenet_pacifism = {
-					is_in_list = selected_doctrines
-				}
-				flag:tenet_dharmic_pacifism = {
-					is_in_list = selected_doctrines
-				}
+			custom_description = {
+				text = incompatible_tenet_pacifism_trigger
+				NOT = { flag:tenet_pacifism = { is_in_list = selected_doctrines } }
+			}
+			custom_description = {
+				text = incompatible_tenet_dharmic_pacifism_trigger
+				NOT = { flag:tenet_dharmic_pacifism = { is_in_list = selected_doctrines } }
 			}
 		}
 
@@ -1861,6 +1936,87 @@
 		character_modifier = {
 			ai_war_chance = 0.5
 			ai_war_cooldown = -0.25
+		}
+	}
+
+	tenet_gruesome_festivals = {
+		name = {
+			first_valid = {
+				triggered_desc = {
+					trigger = { religion_tag = germanic_religion }
+					desc = tenet_gruesome_festivals_blot_name
+				}
+				desc = tenet_gruesome_festivals_name
+			}
+		}
+
+		icon = core_tenet_blood_bowl
+
+		piety_cost = {
+			# If you've already got human sacrifice, this is a nice and easy jump.
+			if = {
+				limit = { has_doctrine = tenet_human_sacrifice }
+				value = faith_tenet_cost_low
+			}
+			# Otherwise, follow the same pricing tiers as tenet_human_sacrifice.
+			else_if = {
+				limit = {
+					has_doctrine = pagan_hostility_doctrine
+				}
+				value = faith_tenet_cost_mid
+			}
+			else_if = {
+				limit = {
+					religion_tag = hinduism_religion
+				}
+				value = faith_tenet_cost_high
+			}
+			else = {
+				value = faith_tenet_cost_massive
+			}
+
+			# Multiplier for keeping same tenet
+			if = {
+				limit = { has_doctrine = tenet_gruesome_festivals }
+				multiply = faith_unchanged_doctrine_cost_mult
+			}
+		}
+
+		is_shown = {
+			# No HumSac for Abrahamics: 'tis literally the religion-namer.
+			NOR = {
+				religion_tag = christianity_religion
+				religion_tag = judaism_religion
+				religion_tag = islam_religion
+			}
+			# And DLC required.
+			has_fp1_dlc_trigger = yes
+		}
+
+		can_pick = {
+			custom_description = {
+				text = incompatible_tenet_pacifism_trigger
+				NOT = {
+					flag:tenet_pacifism = { is_in_list = selected_doctrines }
+				}
+			}
+			custom_description = {
+				text = incompatible_tenet_dharmic_pacifism_trigger
+				NOT = {
+					flag:tenet_dharmic_pacifism = { is_in_list = selected_doctrines }
+				}
+			}
+			custom_description = {
+				text = incompatible_tenet_human_sacrifice_trigger
+				NOT = {
+					flag:tenet_human_sacrifice = { is_in_list = selected_doctrines }
+				}
+			}
+		}
+
+		parameters = {
+			human_sacrifice_active = yes
+			gruesome_festivals_active = yes
 		}
 	}
 
@@ -1970,6 +2126,7 @@
 			hostility_override_unreformed_faith_doctrine = 2
 			unreformed_syncretic_actor_opinion_active = yes
 			opinion_of_unreformed_syncretic_recipient_opinion_active = 30 #Sync this to syncretic_mutual_opinion_bonus_value
+			unreformed_syncretic_conversion_malus_active = yes
 		}
 		traits = {
 			virtues = { humble }
@@ -2309,7 +2466,7 @@
 		piety_cost = {
 			if = {
 				limit = {
-					has_variable = accepted_cannibalsim
+					has_variable = accepted_cannibalism
 				}
 				value = faith_tenet_cost_low
 			}
@@ -2447,19 +2604,16 @@
 	}
 
 	#############################
-	# Empty Template Tenet 		#
+	# Sons of Ragnarok	#
 	#############################
 	tenet_sons_of_ragnarok = {
+		icon = core_test_icon
 		piety_cost = {
 			value = faith_tenet_cost_mid
 		}
 
 		is_shown = {
-			NOR = {
-				religion_tag = islam_religion
-				religion_tag = judaism_religion
-				religion_tag = dualism_religion
-			}
+			religion_tag = germanic_religion
 		}
 
 		can_pick = {
@@ -2475,10 +2629,18 @@
 
 		parameters = {
 			warmonger = yes
+			raiding_enabled = yes
 			conquest_cb_enabled = yes
-			invasion_cb_enabled = yes
 			great_holy_wars_active_if_reformed = yes
-			clergy_can_fight = yes
+		}
+		character_modifier = {
+			prowess = 5
+			naval_movement_speed_mult = 0.25
+			raid_speed = 0.50
+			max_loot_mult = 0.5
+		}
+		traits = {
+			virtues = { reaver, viking }
 		}
 		
 	}
